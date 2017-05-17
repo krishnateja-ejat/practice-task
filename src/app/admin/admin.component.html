@@ -1,0 +1,123 @@
+<section class="success" id="courses">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-center">
+        <h2>Courses Offered</h2>
+      </div>
+    </div>
+    <table class="table table-striped" [mfData]="course_arr" #mf="mfDataTable" [mfRowsOnPage]="5">
+      <thead>
+      <tr>
+        <th style="width: 12%">
+          <mfDefaultSorter by="name">Course Name</mfDefaultSorter>
+        </th>
+        <th style="width: 12%">
+          <mfDefaultSorter by="email">Description</mfDefaultSorter>
+        </th>
+        <th style="width: 12%">
+          <mfDefaultSorter by="age">Duration</mfDefaultSorter>
+        </th>
+        <th style="width: 12%">
+          <mfDefaultSorter by="city">NoOfDays</mfDefaultSorter>
+        </th>
+        <th style="width: 12%">
+          <mfDefaultSorter by="name">Coach</mfDefaultSorter>
+        </th>
+        <th style="width: 12%">
+          <mfDefaultSorter by="email">Fee</mfDefaultSorter>
+        </th>
+        <th style="width: 12%">
+          <mfDefaultSorter by="age">TimeSlot</mfDefaultSorter>
+        </th>
+        <th style="width: 15%">
+          <mfDefaultSorter by="city">NoOfStudents</mfDefaultSorter>
+        </th>
+        <th style="width: 15%">
+          <mfDefaultSorter by="city">AvailableSlots</mfDefaultSorter>
+        </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of course_arr; let j=index" >
+        <td bgcolor="#ff7f50">{{item.course_name}}</td>
+        <td bgcolor="#ff7f50">{{item.description}}</td>
+        <td bgcolor="#ff7f50">{{item.duration}}</td>
+        <td bgcolor="#ff7f50">{{item.noOfDays}}</td>
+        <td bgcolor="#ff7f50">{{item.Coach}}</td>
+        <td bgcolor="#ff7f50">{{item.fee}}</td>
+        <td bgcolor="#ff7f50">{{item.timeSlot}}</td>
+        <td bgcolor="#ff7f50">{{item.noOfStudents}}</td>
+        <td bgcolor="#ff7f50">{{item.availableSlots}}</td>
+      </tr>
+      </tbody>
+      <tfoot>
+      <tr>
+        <td colspan="4">
+          <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+        </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Enter Your Course Details Here
+      </div>
+      <div class="panel-body">
+        <form name="myform">
+          <div class="form-group">
+            <label>Course Name *</label>
+            <input type="text" class="form-control"  name="course_name" [(ngModel)]="course_name" placeholder="Course Name" id="c_name" >
+          </div>
+          <div class="form-group">
+            <label >Duration (Min 1 Hr)*</label>
+            <input id="duration" name="duration" [(ngModel)]="duration" class="form-control" type="text" data-validation="email">
+            <span id="error_lastname" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label >No of Days *</label>
+            <input id="c_days"   class="form-control" [(ngModel)]="noOfDays" name="noOfDays" type="number" min="1" >
+          </div>
+          <div class="form-group">
+            <label >Fee *</label>
+            <input id="c_fee"  name="fee" [(ngModel)]="fee" class="form-control" type="number" min="1" >
+          </div>
+
+          <div class="form-group">
+            <label>Course Slot Timings</label>
+            <select  id="slot" class="form-control" name="timeSlot" [(ngModel)]="timeSlot">
+              <option selected>8Am</option>
+              <option>1Pm</option>
+              <option>4Pm</option>
+            </select>
+            <span id="error_gender" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label >Coach *</label>
+            <input type="text" class="form-control" placeholder="coach" id="c_coach" name="Coach" [(ngModel)]="Coach">
+            <span id="error_phone" class="text-danger"></span>
+          </div>
+          <div class="form-group">
+            <label >No Of Students *</label>
+            <input type="text" class="form-control" name="noOfStudents" [(ngModel)]="noOfStudents" placeholder="Number Of Students" id="std_count">
+          </div>
+          <div class="form-group">
+            <label >Available Slots *</label>
+            <input type="text" id="std_slots" name="availableSlots" [(ngModel)]="availableSlots" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label >Discription</label>
+            <input type="text" class="form-control" name="courseDescription" [(ngModel)]="courseDescription" placeholder="Course description" id="c_description" >
+
+          </div>
+
+          <button type="button" class="btn btn-success btn-lg" (click)="tab()">Submit</button>
+          <button type="button" id="btnExcel" class="btn btn-success btn-lg" (click)="add()" disabled>ADD Course</button>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

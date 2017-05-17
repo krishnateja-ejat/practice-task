@@ -1,0 +1,47 @@
+<div class="container">
+  <div class="row">
+    <div class="page-header">
+      <h1>Registration Form for Student</h1>
+    </div>
+    <form class="form-horizontal" role="form" method="post" action="#">
+
+      <div class="form-group">
+
+        <div class="col-sm-6">
+          <label >First Name:</label>
+          <input type="text" class="form-control"  name="first_name" [(ngModel)]="firse_name" placeholder="First Name"  >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-6">
+          <label >Last Name:</label>
+          <input type="text" class="form-control"  name="last_name" [(ngModel)]="last_name" placeholder="last Name"  >
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-6">
+          <label >Email:</label>
+          <input type="text" class="form-control"  name="s_mail" [(ngModel)]="s_mail" placeholder="Email"  >
+        </div>
+      </div>
+
+      <div class="form-group">
+
+        <div class="col-sm-6">
+          <label>Password:</label>
+          <input type="password" class="form-control"  name="s_password" [(ngModel)]="s_password" placeholder="Password"  >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="btn" class="btn btn-primary" id="register" (click)="add_student()">Register</button>
+          <button type="btn" class="btn btn-primary" id="send" (click)="send_data()">Send</button>
+
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
