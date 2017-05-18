@@ -37,13 +37,12 @@ export class StudentComponent  {
     this.s_password="";
     this.student_arr.push(data)
     localStorage.setItem("student_data", JSON.stringify(this.student_arr));
-    this.router.navigateByUrl('/home');
     this.send.data_from_student(this.student_arr);
 
   }
   send_data()
   {
-
+    this.router.navigateByUrl('/home');
   }
 }
 

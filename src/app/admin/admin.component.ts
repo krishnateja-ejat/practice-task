@@ -17,14 +17,13 @@ export class AdminComponent  {
   noOfDays:number;
   fee:number;
   timeSlot:string;
-  noOfStudents;
+  noOfStudents:number;
   Coach:string;
-  availableSlots:string;
+  availableSlots:number;
   courseDescription: string;
-
-
+  Courses
   constructor(private router: Router,private service:Course,private localStorageService: LocalStorageService) {
-
+    console.log(this.course_arr)
   }
 
   tab() {
@@ -38,14 +37,13 @@ export class AdminComponent  {
         "fee": this.fee,
         "timeSlot": this.timeSlot,
         "noOfStudents": this.noOfStudents,
-        "availableSlots": this.availableSlots
-
+        "availableSlots": this.availableSlots,
+        "tim": {"8Am":this.noOfStudents,"1Pm":this.noOfStudents, "4Pm":this.noOfStudents}
       }
     this.course_arr.push(obj);
-     let Courses=this.course_arr;
-
-    localStorage.setItem("test", JSON.stringify(Courses));
-    (<HTMLInputElement> document.getElementById("btnExcel")).disabled = false;
+      this.Courses=this.course_arr;
+    localStorage.setItem("test", JSON.stringify(this.Courses));
+    (<HTMLInputElement>document.getElementById("btnExcel")).disabled=false
      this.clear();
 
 
@@ -60,8 +58,9 @@ export class AdminComponent  {
     this.Coach="";
     this.fee=null;
     this.timeSlot="";
-    this.noOfStudents="";
-    this.availableSlots="";
+    this.noOfStudents;
+    this.availableSlots;
+
   }
   add()
   {

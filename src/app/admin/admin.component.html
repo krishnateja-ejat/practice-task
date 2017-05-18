@@ -38,7 +38,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of course_arr; let j=index" >
+      <tr *ngFor="let item of course_arr;" >
         <td bgcolor="#ff7f50">{{item.course_name}}</td>
         <td bgcolor="#ff7f50">{{item.description}}</td>
         <td bgcolor="#ff7f50">{{item.duration}}</td>
@@ -69,7 +69,7 @@
         <form name="myform">
           <div class="form-group">
             <label>Course Name *</label>
-            <input type="text" class="form-control"  name="course_name" [(ngModel)]="course_name" placeholder="Course Name" id="c_name" >
+            <input type="text" class="form-control"  name="course_name" [(ngModel)]="course_name"  id="c_name" >
           </div>
           <div class="form-group">
             <label >Duration (Min 1 Hr)*</label>
@@ -82,7 +82,7 @@
           </div>
           <div class="form-group">
             <label >Fee *</label>
-            <input id="c_fee"  name="fee" [(ngModel)]="fee" class="form-control" type="number" min="1" >
+            <input id="c_fee"  name="fee" [(ngModel)]="fee" class="form-control" type="text" min="1" >
           </div>
 
           <div class="form-group">
@@ -96,20 +96,20 @@
           </div>
           <div class="form-group">
             <label >Coach *</label>
-            <input type="text" class="form-control" placeholder="coach" id="c_coach" name="Coach" [(ngModel)]="Coach">
+            <input type="text" class="form-control"  id="c_coach" name="Coach" [(ngModel)]="Coach">
             <span id="error_phone" class="text-danger"></span>
           </div>
           <div class="form-group">
             <label >No Of Students *</label>
-            <input type="text" class="form-control" name="noOfStudents" [(ngModel)]="noOfStudents" placeholder="Number Of Students" id="std_count">
+            <input type="number" class="form-control" name="noOfStudents" [(ngModel)]="noOfStudents"  id="std_count">
           </div>
           <div class="form-group">
             <label >Available Slots *</label>
-            <input type="text" id="std_slots" name="availableSlots" [(ngModel)]="availableSlots" class="form-control" >
+            <input type="number" id="std_slots" name="availableSlots" [(ngModel)]="availableSlots" class="form-control" >
           </div>
           <div class="form-group">
             <label >Discription</label>
-            <input type="text" class="form-control" name="courseDescription" [(ngModel)]="courseDescription" placeholder="Course description" id="c_description" >
+            <input type="text" class="form-control" name="courseDescription" [(ngModel)]="courseDescription"  id="c_description" >
 
           </div>
 

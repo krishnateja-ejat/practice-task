@@ -48,7 +48,7 @@
         <td bgcolor="#ff7f50">{{item.timeSlot}}</td>
         <td bgcolor="#ff7f50">{{item.noOfStudents}}</td>
         <td bgcolor="#ff7f50">{{item.availableSlots}}</td>
-        <td><button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#enroll_Modal">Enroll</button></td>
+        <td><button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"   (click)="enrol(j,flag)"  >Enroll</button></td>
       </tr>
       </tbody>
       <tfoot>
@@ -66,7 +66,7 @@
 
 
 <!-- Contact Section -->
-<section  id="contact">
+<section  id="login">
   <div class="container">
     <div class="row">
       <div class="col-lg-12 text-center">
@@ -79,40 +79,24 @@
         <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
         <form name="sentMessage" id="sentMessage" novalidate>
           <div class="row control-group">
-            <select id="select" data-target="#myModal">
+            <select name="h_person" [(ngModel)]="h_person">
               <option value="admin">Admin</option>
               <option value="student">Student</option>
             </select>
             <p class="help-block text-danger"></p>
           </div>
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <input type="text" class="form-control"  name="h_mail" [(ngModel)]="h_mail" placeholder="Email Id">
+          </div>
+          <div class="form-group col-xs-12 floating-label-form-group controls">
+            <input type="text" class="form-control"  name="h_password" [(ngModel)]="h_password" placeholder="Password">
+          </div>
 
-          <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label for="name">Name</label>
-              <input type="text" class="form-control" placeholder="Name" id="name" required data-validation-required-message="Please enter your name.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label for="email">Email Address</label>
-              <input type="email" class="form-control" placeholder="Email Address" id="email" >
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
-          <div class="row control-group">
-            <div class="form-group col-xs-12 floating-label-form-group controls">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" placeholder="Password" id="password" required data-validation-required-message="Please enter your phone number.">
-              <p class="help-block text-danger"></p>
-            </div>
-          </div>
           <br>
           <div id="success"></div>
           <div class="row">
             <div class="form-group col-xs-12">
               <button type="button" class="btn btn-success btn-lg" (click)="check()">Send</button>
-              <button type="button" id="btnExcel" class="btn btn-success btn-lg" (click)="add()" disabled>ADD Course</button>
             </div>
           </div>
         </form>
@@ -120,3 +104,81 @@
     </div>
   </div>
 </section>
+<!--
+//////////////////////////////////////////Model for Table//////////////////////////////////////////////////
+-->
+<div class="container">
+
+  <!-- Trigger the modal with a button -->
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+
+
+        <table class="table table-striped" [mfData]="enrolled_course_values" #mf="mfDataTable" [mfRowsOnPage]="5">
+          <thead>
+          <tr>
+            <th style="width: 12%">
+              <mfDefaultSorter by="name">Student First Name</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="email">Student Last Name</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="age">Student Mail</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="name">Course Name</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="email">Description</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="age">Duration</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="city">NoOfDays</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="name">Coach</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="email">Fee</mfDefaultSorter>
+            </th>
+            <th style="width: 12%">
+              <mfDefaultSorter by="age">TimeSlot</mfDefaultSorter>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let item of enrolled_course_values; let j=index" >
+            <td bgcolor="#ff7f50">{{item.Student_fname}}</td>
+            <td bgcolor="#ff7f50">{{item.Student_lname}}</td>
+            <td bgcolor="#ff7f50">{{item.Student_mail}}</td>
+            <td bgcolor="#ff7f50">{{item.course_name}}</td>
+            <td bgcolor="#ff7f50">{{item.description}}</td>
+            <td bgcolor="#ff7f50">{{item.noOfDays}}</td>
+            <td bgcolor="#ff7f50">{{item.duration}}</td>
+            <td bgcolor="#ff7f50">{{item.Coach}}</td>
+            <td bgcolor="#ff7f50">{{item.fee}}</td>
+            <td bgcolor="#ff7f50">{{item.timeSlot}}</td>
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="4">
+              <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+
+
+    </div>
+  </div>
+
+</div>
