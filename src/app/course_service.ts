@@ -11,20 +11,28 @@ import {Observable} from "rxjs/Observable";
 
 export class Course
 {
-  temp;
+  public Courses=[];
+  public Student=[];
   constructor(private http:Http)
   {}
 
-  addCourse(Courses):any{
-    this.temp=Courses;
+ addCourse(Courses){
+    this.Courses.push(Courses);
   }
-
-
   set_Course():any{
-    return this.temp
-      .map(res=>res.json());
-  }
+    return this.Courses
 
+  }
+  /*SetStudent(Student)
+  {
+
+    this.Student.push(Student);
+  }
+  getStudent():any
+  {
+    console.log(this.Student)
+    return this.Student
+  }*/
 
 }
 

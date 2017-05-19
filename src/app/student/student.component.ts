@@ -18,7 +18,7 @@ export class StudentComponent  {
  public last_name:string;
  public s_mail:string;
  public s_password:string;
-  constructor(private router: Router,public send :HomeComponent,localStorageService: LocalStorageService) {
+  constructor(private router: Router,public send :HomeComponent,localStorageService: LocalStorageService,public service:Course) {
 
   }
   add_student()
@@ -37,7 +37,7 @@ export class StudentComponent  {
     this.s_password="";
     this.student_arr.push(data)
     localStorage.setItem("student_data", JSON.stringify(this.student_arr));
-    this.send.data_from_student(this.student_arr);
+
 
   }
   send_data()

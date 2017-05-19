@@ -7,7 +7,6 @@ import { LocalStorageService } from 'angular-2-local-storage';
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css'],
   providers:[Course]
-
 })
 
 export class AdminComponent  {
@@ -22,8 +21,7 @@ export class AdminComponent  {
   availableSlots:number;
   courseDescription: string;
   Courses
-  constructor(private router: Router,private service:Course,private localStorageService: LocalStorageService) {
-    console.log(this.course_arr)
+  constructor(private router: Router,private service:Course) {
   }
 
   tab() {
@@ -42,8 +40,10 @@ export class AdminComponent  {
       }
     this.course_arr.push(obj);
       this.Courses=this.course_arr;
+    (<HTMLInputElement>document.getElementById("btnExcel")).disabled=false;
+      this.service.addCourse(this.Courses)
     localStorage.setItem("test", JSON.stringify(this.Courses));
-    (<HTMLInputElement>document.getElementById("btnExcel")).disabled=false
+    let std_data=localStorage.getItem("student_data");
      this.clear();
 
 
@@ -58,8 +58,8 @@ export class AdminComponent  {
     this.Coach="";
     this.fee=null;
     this.timeSlot="";
-    this.noOfStudents;
-    this.availableSlots;
+    this.noOfStudents=0;
+    this.availableSlots=0;
 
   }
   add()

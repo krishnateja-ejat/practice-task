@@ -8,7 +8,7 @@ import { LocalStorageService } from 'angular-2-local-storage';
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers:[HTTPTestService,Course],
+  providers:[HTTPTestService,Course]
 
 
 })
@@ -23,16 +23,17 @@ export class HomeComponent {
   data_std_component=[];
   public course_arr=[];
   public course_data;
-  public sample_arr=[];
+  public static sample_arr;
   public h_name;
   public h_mail;
   public h_password;
-  public h_person
+  public h_person;
+ // public static data_course:Course;
   cours
   flag=0;
   dub=0
   public change_students;
-  constructor(private router: Router,public _httpService:HTTPTestService,public route: ActivatedRoute,public data_course:Course,private localStorageService: LocalStorageService) {
+  constructor(private router: Router,public _httpService:HTTPTestService,public route: ActivatedRoute,private localStorageService: LocalStorageService,public s:Course) {
     this._httpService.getjsondata()
       .subscribe(data => this.data = data,
         error=>alert(error),
@@ -61,17 +62,13 @@ export class HomeComponent {
     ///Student Local Storage
     let std_data=localStorage.getItem("student_data");
     this.course_arr=JSON.parse(std_data);
-
+    console.log("dssd"+std_data)
   }
 
 
-  data_from_student(value:any)
-  {
-    this.data_std_component=value;
-    console.log(this.data_std_component)
 
-  }
-  s=true;
+
+
   check()
   {
     if(this.h_person=="admin")
@@ -83,27 +80,37 @@ export class HomeComponent {
       }
       else
       {
-        alert("you are not admin please select student for enrolment");
+        alert("Please check your Id & Password Admin");
       }
     }
     else if(this.h_person=="student")
     {
-     console.log(this.course_arr)
+      let temp=0
       for(let i=0;i<this.course_arr.length;i++)
       {
-        if(this.h_mail=this.course_arr[i].s_mail&&this.h_password===this.course_arr[i].s_password)
+
+        if(this.h_mail===this.course_arr[i].s_mail&&this.h_password===this.course_arr[i].s_password)
+        {
+          temp=1;
+        }
+        if(temp==1)
         {
 
           this.enrolled_person_fname=this.course_arr[i].firse_name;
           this.enrolled_person_lname=this.course_arr[i].last_name;
           this.enrolled_person_mail=this.course_arr[i].s_mail;
+          alert(this.enrolled_person_fname+" " +this.enrolled_person_lname+"Successfully Logged in");
           this.flag=1;
+          break;
         }
-
       }
-      this.rest();
+      if(temp==0)
+      {
 
+        alert("!!!!Sorry Please Check Your Login & Password");
+      }
     }
+    this.rest();
   }
   rest=()=>
   {
@@ -121,10 +128,8 @@ export class HomeComponent {
 
   enrol(index,f)
   {
-  alert(index)
     if(f==1)
     {
-
        let val=this.check_log(this.enrolled_course_values,this.enrolled_person_mail,this.course_data[index].course_name)
 
       if(val==false)
@@ -173,18 +178,10 @@ export class HomeComponent {
     let flag1 =0;
     for(let i=0;i<course_data.length;i++)
     {
-
-      console.log("hi")
-      console.log(course_data[i].Student_mail+' '+loged_person);
-      console.log(course_data[i].course_name+' '+course);
-
-      console.log("hi")
       if(course_data[i].Student_mail===loged_person && course_data[i].course_name===course )
       {
         flag1 = 1;
       }
-
-
     }
     if(flag1 === 1){
       return true;
@@ -193,6 +190,8 @@ export class HomeComponent {
     }
 
   }
+
+
 
 }
 
