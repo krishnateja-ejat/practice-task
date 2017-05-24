@@ -1,20 +1,24 @@
-import {Component} from '@angular/core';
+import {Component,OnInit,ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import {HTTPTestService} from "../service";
 import {ActivatedRoute} from "@angular/router";
 import {Course} from "../course_service";
 import { LocalStorageService } from 'angular-2-local-storage';
+import {FormBuilder, FormGroup, Validators,FormControl} from '@angular/forms';
+import {Popup} from 'ng2-opd-popup';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-  providers:[HTTPTestService,Course]
+  providers:[HTTPTestService,Course,FormBuilder]
 
 
 })
 
-export class HomeComponent {
+export class HomeComponent implements OnInit{
   //Varibles for getting data from Admin Page
+
+  loginform:FormGroup;
   public enrolled_person_fname;
   public  enrolled_person_lname;
   public  enrolled_person_mail;
@@ -28,12 +32,14 @@ export class HomeComponent {
   public h_mail;
   public h_password;
   public h_person;
+  myForm: FormGroup;
  // public static data_course:Course;
   cours
   flag=0;
   dub=0
   public change_students;
-  constructor(private router: Router,public _httpService:HTTPTestService,public route: ActivatedRoute,private localStorageService: LocalStorageService,public s:Course) {
+  constructor(public popup:Popup ,private form:FormBuilder,private router: Router,public _httpService:HTTPTestService,public route: ActivatedRoute,private localStorageService: LocalStorageService,public s:Course)
+  {
     this._httpService.getjsondata()
       .subscribe(data => this.data = data,
         error=>alert(error),
@@ -64,32 +70,46 @@ export class HomeComponent {
     this.course_arr=JSON.parse(std_data);
     console.log("dssd"+std_data)
   }
-
-
-
-
-
-  check()
+  @ViewChild('popup4') popup4:Popup;
+  ngOnInit()
   {
-    if(this.h_person=="admin")
+    this.myForm = this.form.group({
+      h_person:['',Validators.required],
+      h_mail: ['', Validators.required],
+      h_password: ['', Validators.required]
+    });
+
+
+  }
+
+
+
+
+
+  check=():void=>
+  {
+
+
+    if(this.myForm.value.h_person=="admin")
     {
-      if(this.data.email===this.h_mail&&this.data.password===this.h_password)
+      if(this.data.email===this.myForm.value.h_mail&&this.data.password===this.myForm.value.h_password)
       {
         this.router.navigateByUrl('/admin');
-        this.rest();
+        this.myForm.reset();
       }
       else
       {
         alert("Please check your Id & Password Admin");
+        this.myForm.reset();
       }
     }
-    else if(this.h_person=="student")
+    else if(this.myForm.value.h_person=="student")
     {
       let temp=0
       for(let i=0;i<this.course_arr.length;i++)
       {
 
-        if(this.h_mail===this.course_arr[i].s_mail&&this.h_password===this.course_arr[i].s_password)
+        if(this.myForm.value.h_mail===this.course_arr[i].s_mail&&this.myForm.value.h_password===this.course_arr[i].s_password)
         {
           temp=1;
         }
@@ -101,6 +121,7 @@ export class HomeComponent {
           this.enrolled_person_mail=this.course_arr[i].s_mail;
           alert(this.enrolled_person_fname+" " +this.enrolled_person_lname+"Successfully Logged in");
           this.flag=1;
+          this.myForm.reset();
           break;
         }
       }
@@ -108,16 +129,13 @@ export class HomeComponent {
       {
 
         alert("!!!!Sorry Please Check Your Login & Password");
+        this.myForm.reset();
       }
     }
-    this.rest();
+
   }
-  rest=()=>
-  {
-    this.h_mail="";
-    this.h_password="";
-  };
-  add()
+
+  add=():void=>
   {
     this.router.navigateByUrl('/student');
   }
@@ -126,7 +144,7 @@ export class HomeComponent {
 
 
 
-  enrol(index,f)
+  enrol=(index,f):void=>
   {
     if(f==1)
     {
@@ -140,7 +158,6 @@ export class HomeComponent {
           {
             this.enrolled_course=
               {
-
                 "Student_fname":this.enrolled_person_fname,
                 "Student_lname":this.enrolled_person_lname,
                 "Student_mail":this.enrolled_person_mail,
@@ -173,7 +190,7 @@ export class HomeComponent {
     }
 
   }
-  check_log(course_data,loged_person,course)
+  check_log=(course_data,loged_person,course):boolean=>
   {
     let flag1 =0;
     for(let i=0;i<course_data.length;i++)
@@ -189,6 +206,18 @@ export class HomeComponent {
      return false
     }
 
+  }
+  showPopup4=()=>{
+    alert("yyyy")
+    this.popup4.options = {
+      cancleBtnClass: "btn btn-default",
+      confirmBtnClass: "btn btn-default",
+      color: "#60B95D",
+      header: "Like for this Post",   // this method is used to show the popup for likes by whom.
+      widthProsentage:35,
+      cancleBtnContent:"Cancel",
+      animation: "bounceIn"};
+    this.popup4.show(this.popup4.options);
   }
 
 

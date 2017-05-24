@@ -38,18 +38,23 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let item of course_data; let j=index" >
-        <td bgcolor="#ff7f50">{{item.course_name}}</td>
-        <td bgcolor="#ff7f50">{{item.description}}</td>
-        <td bgcolor="#ff7f50">{{item.duration}}</td>
-        <td bgcolor="#ff7f50">{{item.noOfDays}}</td>
-        <td bgcolor="#ff7f50">{{item.Coach}}</td>
-        <td bgcolor="#ff7f50">{{item.fee}}</td>
-        <td bgcolor="#ff7f50">{{item.timeSlot}}</td>
-        <td bgcolor="#ff7f50">{{item.noOfStudents}}</td>
-        <td bgcolor="#ff7f50">{{item.availableSlots}}</td>
-        <td><button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal"   (click)="enrol(j,flag)"  >Enroll</button></td>
+
+      <tr *ngFor=" let item of course_data; let j=index" >
+
+          <td bgcolor="#ff7f50">{{item.course_name}}</td>
+          <td bgcolor="#ff7f50">{{item.description}}</td>
+          <td bgcolor="#ff7f50">{{item.duration}}</td>
+          <td bgcolor="#ff7f50">{{item.noOfDays}}</td>
+          <td bgcolor="#ff7f50">{{item.Coach}}</td>
+          <td bgcolor="#ff7f50">{{item.fee}}</td>
+          <td bgcolor="#ff7f50">{{item.timeSlot}}</td>
+          <td bgcolor="#ff7f50">{{item.noOfStudents}}</td>
+          <td bgcolor="#ff7f50">{{item.availableSlots}}</td>
+          <td ><button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#myModal" [disabled]="item.noOfStudents<=0"  (click)="enrol(j,flag)"  >Enroll</button></td>
+
+          <!--</ng-template>-->
       </tr>
+
       </tbody>
       <tfoot>
       <tr>
@@ -77,19 +82,21 @@
       <div class="col-lg-8 col-lg-offset-2">
         <!-- To configure the contact form email address, go to mail/contact_me.php and update the email address in the PHP file on line 19. -->
         <!-- The form should work on most web servers, but if the form is not working you may need to configure your web server differently. -->
-        <form name="sentMessage" id="sentMessage" novalidate>
+        <form [formGroup]="myForm">
           <div class="row control-group">
-            <select name="h_person" [(ngModel)]="h_person">
+            <select name="h_person" formControlName="h_person">
               <option value="admin">Admin</option>
               <option value="student">Student</option>
             </select>
             <p class="help-block text-danger"></p>
           </div>
           <div class="form-group col-xs-12 floating-label-form-group controls">
-            <input type="text" class="form-control"  name="h_mail" [(ngModel)]="h_mail" placeholder="Email Id">
+            <p *ngIf="myForm.controls.h_mail.errors?.required">*</p>
+            <input type="text" class="form-control"  formControlName="h_mail" placeholder="Email Id" >
+
           </div>
           <div class="form-group col-xs-12 floating-label-form-group controls">
-            <input type="password" class="form-control"  name="h_password" [(ngModel)]="h_password" placeholder="Password">
+            <input type="password" class="form-control"   formControlName="h_password" placeholder="Password" >
           </div>
 
           <br>
@@ -97,6 +104,7 @@
           <div class="row">
             <div class="form-group col-xs-12">
               <button type="button" class="btn btn-success btn-lg" (click)="check()">Send</button>
+              <button class="btn-success" (click)="showPopup4()"> show more</button>
             </div>
           </div>
         </form>
@@ -105,20 +113,14 @@
   </div>
 </section>
 <!--
-//////////////////////////////////////////Model for Table//////////////////////////////////////////////////
+/////////////////////////////////////////Model for Table//////////////////////////////////////////////////
 -->
 <div class="container">
 
-  <!-- Trigger the modal with a button -->
 
-
-  <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
-
-      <!-- Modal content-->
-
-
+      <div class="col-lg-push-12">
         <table class="table table-striped" [mfData]="enrolled_course_values" #mf="mfDataTable" [mfRowsOnPage]="5">
           <thead>
           <tr>
@@ -178,7 +180,25 @@
         </table>
 
 
+
+
     </div>
   </div>
-
 </div>
+</div>
+<popup #popup4 (confirmClick)="close()" >
+  <form class="form-horizontal">
+    <div class="form-group">
+      <div class="col-lg-6" *ngFor="let clike of post_likes ">
+        <ul class="list-group">
+          <li class="list-group-item">
+            <h6>{{clike.likeby}}</h6>
+            <span class="label label-success pull-right">{{clike.likeon |date:'medium'}}</span>
+          </li>
+        </ul>
+
+      </div>
+    </div>
+  </form>
+</popup>
+

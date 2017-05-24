@@ -24,7 +24,7 @@ export class AdminComponent  {
   constructor(private router: Router,private service:Course) {
   }
 
-  tab() {
+  tab=():void=> {
      let obj=
       {
         "course_name": this.course_name,
@@ -49,7 +49,7 @@ export class AdminComponent  {
 
   }
 
-  clear()
+  clear=():void=>
   {
     this.course_name="";
     this.courseDescription="";
@@ -62,7 +62,7 @@ export class AdminComponent  {
     this.availableSlots=0;
 
   }
-  add()
+  add=():void=>
   {
     this.router.navigateByUrl('/home')
   }
